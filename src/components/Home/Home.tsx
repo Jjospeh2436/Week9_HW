@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom'; 
 
-import shopImage from '../../assets/images/shop.jpg'; 
+
 import { NavBar } from '../sharedComponents/NavBar';
 
 interface Props {
@@ -37,6 +37,7 @@ const MainText = styled('div')({
 
 
 export const Home = (props: Props) => {
+    const myAuth = localStorage.getItem('auth')
 
     return (
         <Root>
@@ -44,7 +45,7 @@ export const Home = (props: Props) => {
             <Main>
                 <MainText>
                     <Typography variant='h3'> { props.title }</Typography>
-                    <Button sx={{ marginTop: '10px'}} component={Link} to={"/shop"} variant='contained'>Purchase a nice Car</Button>
+                    <Button sx={{ marginTop: '10px'}} component={Link} to={myAuth === 'true' ? "/shop" : "/auth"} variant='contained'>Purchase a Nice Car</Button>
                 </MainText>
             </Main>
         </Root>
