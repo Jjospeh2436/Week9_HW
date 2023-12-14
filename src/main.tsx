@@ -16,8 +16,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme = { theme }>
         <Router>
           <Routes>
-            <Route path='/' element={<Home title = {"Car Shop"}/>} />
-            <Route path='/auth' element={<Auth title = {"Car Shop"}/>} />
+            <Route path='/' element={<Home title = {"Terraria Shop"}/>} />
+            <Route path='/auth' element={<Auth title = {"Terraria Shop"}/>} />
             <Route path='/shop' element={<Shop />} />
             <Route path='/cart' element={<Cart />} />
           </Routes>
