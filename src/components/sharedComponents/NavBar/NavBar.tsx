@@ -1,5 +1,5 @@
 import * as _React from 'react';
-import { useState } from 'react'; 
+import { useState } from 'react'; //useState is a React Hook
 import {
     Button,
     Drawer, 
@@ -9,11 +9,11 @@ import {
     AppBar,
     Toolbar,
     IconButton,
-    Stack, 
+    Stack, //flexbox
     Typography,
-    Divider, 
+    Divider, //this is literally just a line
     CssBaseline,
-    Box 
+    Box //this is just a div 
 } from '@mui/material'; 
 import { useNavigate } from 'react-router-dom'; 
 import CottageIcon from '@mui/icons-material/Cottage';
@@ -21,34 +21,35 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import { signOut, getAuth } from 'firebase/auth';
+import { signOut, getAuth } from 'firebase/auth'
 
 
 
+//internal imports
 import { theme } from '../../../Theme/themes'; 
 
 
-
+// building a CSS object/dictionary to reference inside our html for styling
 const drawerWidth = 200; 
 
 
 const navStyles = {
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp, 
-            duration: theme.transitions.duration.leavingScreen 
+            easing: theme.transitions.easing.sharp, //number 
+            duration: theme.transitions.duration.leavingScreen //string calculation of the duration
         })
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
         transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.easeOut,  
-            duration: theme.transitions.duration.enteringScreen 
+            easing: theme.transitions.easing.easeOut, //number 
+            duration: theme.transitions.duration.enteringScreen //string calculation of the duration
         })
     },
     menuButton: {
-        marginRight: theme.spacing(2) 
+        marginRight: theme.spacing(2) //default to 8px * 2 = 16px
     },
     hide: {
         display: 'none'
@@ -65,6 +66,7 @@ const navStyles = {
         width: drawerWidth,
         alignItems: 'center',
         padding: theme.spacing(1),
+        // using the spread operator ... to grab all the properties from the default toolbar in theme
         ...theme.mixins.toolbar, 
         justifyContent: 'flex-end'
     },
@@ -86,9 +88,9 @@ export const NavBar = () => {
     const [ open, setOpen ] = useState(false) 
     const navigate = useNavigate(); 
     const myAuth = localStorage.getItem('auth')
-    const auth = getAuth();
+    const auth = getAuth()
 
-
+    // 2 functions to help us set our hook
     const handleDrawerOpen = () => {
         setOpen(true)
     }
@@ -100,12 +102,12 @@ export const NavBar = () => {
 
     const navLinks = [
         {
-            text: 'Dealer',
+            text: 'Home',
             icon: <CottageIcon/>,
             onClick: () => navigate('/')
         },
         {
-            text: myAuth === 'true' ? 'Shop' : 'Sign In',
+            text: myAuth === 'true' ?  'Shop' : 'Sign  In',
             icon: myAuth === 'true' ? <ShoppingBagIcon /> : <AssignmentIndIcon />,
             onClick: () => navigate(myAuth === 'true' ? '/shop' : '/auth')
         },
@@ -118,14 +120,15 @@ export const NavBar = () => {
 
     let signInText = 'Sign In'
 
-    if (myAuth === 'true') { 
+    if (myAuth === 'true') {
         signInText = 'Sign Out'
     }
 
     const signInButton = async () => {
         if (myAuth === 'false') {
             navigate('/auth')
-        } else {
+        }
+        else {
             await signOut(auth)
             localStorage.setItem('auth', 'false')
             localStorage.setItem('user', '')
@@ -165,8 +168,9 @@ export const NavBar = () => {
                             color = 'info'
                             size = 'large'
                             sx = {{ marginLeft: '20px'}}
+                            onClick = { signInButton }
                         >
-                            Sign In
+                            { signInText }
                         </Button>
                     </Stack>
             </AppBar>
@@ -174,7 +178,7 @@ export const NavBar = () => {
                 sx={ open ? navStyles.drawer : navStyles.hide }
                 variant = 'persistent'
                 anchor = 'left' 
-                open = {open} 
+                open = {open} //either true or false 
             >
                 <Box sx = {navStyles.drawerHeader }>
                     <IconButton onClick={handleDrawerClose}>
@@ -184,6 +188,7 @@ export const NavBar = () => {
                 <Divider />
                 <List>
                     { navLinks.map( (item) => {
+                        // using variable deconstruction to deconstruct our object/dictionary
                         const { text, icon, onClick } = item; 
                         return (
                             <ListItemButton key={text} onClick={onClick}>
@@ -197,4 +202,9 @@ export const NavBar = () => {
             </Drawer>
         </Box>
     )
+
+
+
+
+
 }

@@ -39,3 +39,26 @@ export const useGetShop = (): GetShopDataProps => {
     return { shopData, getData: handleDataFetch }
 
 }
+
+interface GetOrderDataProps {
+    orderData: ShopProps[]
+    getData: () => void
+}
+
+export const useGetOrder = (): GetOrderDataProps => {
+    const [ orderData, setShopData ] = useState<ShopProps[]>([])
+
+
+    const handleDataFetch = async () => {
+        const result = await serverCalls.getOrder() 
+
+        setShopData(result)
+    }
+
+    useEffect(()=> {
+        handleDataFetch()
+    }, [])  
+
+    return { orderData, getData: handleDataFetch }
+
+}
